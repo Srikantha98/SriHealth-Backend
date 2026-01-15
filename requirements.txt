@@ -1,8 +1,9 @@
 fastapi
-uvicorn
+uvicorn[standard]
+pydantic[email]
 python-dotenv
 pymongo
-passlib
+passlib[bcrypt]
 python-jose
 torch
 torchvision
