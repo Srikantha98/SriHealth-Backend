@@ -16,31 +16,20 @@ if not MONGODB_URI:
     raise RuntimeError("❌ MONGODB_URI is not set in environment variables")
 
 # -----------------------------
-# Create MongoDB client (with TLS)
+# Create MongoDB client
 # -----------------------------
 client = MongoClient(
     MONGODB_URI,
-    tls=True,
-    tlsAllowInvalidCertificates=True,
     serverSelectionTimeoutMS=5000
 )
 
 # -----------------------------
-# Explicit database selection ✅
+# Select database
 # -----------------------------
-db = client["srihealth"]   # 👈 THIS FIXES THE ERROR
+db = client["srihealth"]
 
 # -----------------------------
 # Collections
 # -----------------------------
 users_collection = db["users"]
 predictions_collection = db["predictions"]
-
-# -----------------------------
-# Test connection
-# -----------------------------
-try:
-    client.admin.command("ping")
-    print("✅ MongoDB connected successfully")
-except Exception as e:
-    print("❌ MongoDB connection failed:", e)
