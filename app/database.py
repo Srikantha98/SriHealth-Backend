@@ -20,15 +20,15 @@ if not MONGODB_URI:
 # -----------------------------
 client = MongoClient(
     MONGODB_URI,
-    tls=True,                       # force TLS 1.2+
-    tlsAllowInvalidCertificates=True,  # Render SSL workaround
-    serverSelectionTimeoutMS=5000   # prevent hanging if DB is unreachable
+    tls=True,
+    tlsAllowInvalidCertificates=True,
+    serverSelectionTimeoutMS=5000
 )
 
 # -----------------------------
-# Select database
+# Explicit database selection ✅
 # -----------------------------
-db = client.get_database()  # uses database from URI, or you can do db = client["srihealth"]
+db = client["srihealth"]   # 👈 THIS FIXES THE ERROR
 
 # -----------------------------
 # Collections
@@ -36,4 +36,11 @@ db = client.get_database()  # uses database from URI, or you can do db = client[
 users_collection = db["users"]
 predictions_collection = db["predictions"]
 
-print("✅ MongoDB connected successfully")
+# -----------------------------
+# Test connection
+# -----------------------------
+try:
+    client.admin.command("ping")
+    print("✅ MongoDB connected successfully")
+except Exception as e:
+    print("❌ MongoDB connection failed:", e)
