@@ -3,11 +3,10 @@ uvicorn[standard]
 pydantic[email]
 email-validator
 python-dotenv
-pymongo
+pymongo>=4.3.1
 passlib[bcrypt]
 python-jose
 torch
 torchvision
 Pillow
 python-multipart
-pymongo
