@@ -8,10 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # -----------------------------
-# MongoDB URI
+# MongoDB URI from environment
+# Example:
+# mongodb+srv://username:password@srihealth.mznfvox.mongodb.net/srihealth?retryWrites=true&w=majority&appName=SriHealth
 # -----------------------------
 MONGODB_URI = os.getenv("MONGODB_URI")
-
 if not MONGODB_URI:
     raise RuntimeError("❌ MONGODB_URI is not set in environment variables")
 
@@ -20,16 +21,25 @@ if not MONGODB_URI:
 # -----------------------------
 client = MongoClient(
     MONGODB_URI,
-    serverSelectionTimeoutMS=5000
+    serverSelectionTimeoutMS=5000  # prevent hanging if DB is unreachable
 )
 
 # -----------------------------
-# Select database
+# Select database (explicitly from URI)
 # -----------------------------
-db = client["srihealth"]
+db = client.get_database()  # uses "srihealth" from your URI
 
 # -----------------------------
 # Collections
 # -----------------------------
 users_collection = db["users"]
 predictions_collection = db["predictions"]
+
+# -----------------------------
+# Test connection
+# -----------------------------
+try:
+    client.admin.command("ping")
+    print("✅ MongoDB connected successfully")
+except Exception as e:
+    print("❌ MongoDB connection failed:", e)
