@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-dotenv
+pymongo
+passlib
+python-jose
+torch
+torchvision
+Pillow
