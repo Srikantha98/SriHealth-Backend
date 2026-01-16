@@ -1,24 +1,20 @@
 fastapi
 uvicorn[standard]
 
-# Validation
 pydantic[email]
 email-validator
-
-# Environment
 python-dotenv
 
-# MongoDB Atlas (SRV support REQUIRED)
 pymongo[srv]>=4.3.1
 
-# Authentication & Security
-passlib[bcrypt]
+# ✅ USE THIS (NO bcrypt)
+passlib[argon2]
+argon2-cffi
+
 python-jose
 
-# ML / Image processing
 torch
 torchvision
 Pillow
 
-# File uploads
 python-multipart
