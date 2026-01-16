@@ -8,9 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # -----------------------------
-# MongoDB URI from environment
-# Example:
-# mongodb+srv://username:password@srihealth.mznfvox.mongodb.net/srihealth?retryWrites=true&w=majority&appName=SriHealth
+# MongoDB URI
 # -----------------------------
 MONGODB_URI = os.getenv("MONGODB_URI")
 if not MONGODB_URI:
@@ -21,13 +19,13 @@ if not MONGODB_URI:
 # -----------------------------
 client = MongoClient(
     MONGODB_URI,
-    serverSelectionTimeoutMS=5000  # prevent hanging if DB is unreachable
+    serverSelectionTimeoutMS=5000
 )
 
 # -----------------------------
-# Select database (explicitly from URI)
+# ✅ EXPLICIT database selection (FIX)
 # -----------------------------
-db = client.get_database()  # uses "srihealth" from your URI
+db = client["srihealth"]
 
 # -----------------------------
 # Collections
